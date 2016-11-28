@@ -1,0 +1,23 @@
+#!/bin/bash
+
+
+# Sends an alert email if /boot gets too full
+# 28.11.2016 - Denis Walther
+
+# Define your hostname:
+hostname="your_hostname"
+
+# Define your mail address:
+mail_address="your_mail_address"
+
+# Check the actual used space on /boot:
+check_space=`df -h /boot | awk '{ print $5 }' | sed -n 2p`
+
+# Loop to check and send mail:
+if [ $check_space > '90%' ] 
+  then
+    echo "Warning! /boot on $hostname is almost full. Fix it asap!" | mail -s "/boot on $hostname almost full" $mail_address
+fi
+
+
+
